@@ -2,50 +2,42 @@ import styles from './User.module.css';
 import InputUser from '../User/InputUser/InputUser';
 import ButtonUser from './ButtonUser/ButtonUser.js';
 import CardUser from './CardUser/CardUser';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import ErrorModal from '../ErrorModal/ErrorModal';
 
 
 const User = (props) => {
-
-    const [nameUser, setNameUser] = useState('');
-    const [ageUser, setAgeUser] = useState('');
+    const nameInputRef = useRef();
+    const ageInputRef = useRef();
     const [modal, setModal] = useState();
-
-
 
     function addNewUserClick(event) {
         event.preventDefault();
-        if (nameUser.trim().length === 0 || ageUser.trim().length === 0) {
+        console.log(nameInputRef.current.value);
+        const enteredName = nameInputRef.current.value;
+        const enteredAge = ageInputRef.current.value;
+        if (enteredName.trim().length === 0 || enteredAge.trim().length === 0) {
             setModal({
                 title: 'Invalid input',
                 message: 'Not empty values'
             })
             return;
         }
-        if (+ageUser < 1) {
+        if (+enteredAge < 1) {
             setModal({
                 title: 'Age invalid',
                 message: 'Ages valid are >0'
             })
             return;
         }
-        props.addNewUser(nameUser, ageUser);
-        setNameUser('');
-        setAgeUser('');
-    }
-
-    function getAge(event) {
-        setAgeUser(event.target.value);
-    }
-
-    function getValue(event) {
-        setNameUser(event.target.value);
+        props.addNewUser(enteredName, enteredAge);
+        nameInputRef.current.value = '';
+        ageInputRef.current.value = '';
     }
 
     const errorHandler = () => {
         setModal(null);
-      };
+    };
 
     return (
         <div>
@@ -57,8 +49,8 @@ const User = (props) => {
                 />
             )}
             <CardUser className={styles.enters}>
-                <InputUser title="UserName" getValue={getValue} value={nameUser} />
-                <InputUser title="Age(Years)" getValue={getAge} value={ageUser} />
+                <InputUser title="UserName" useRef={nameInputRef} />
+                <InputUser title="Age(Years)" useRef={ageInputRef} />
                 <ButtonUser eventClick={addNewUserClick} content="Add User" />
             </CardUser>
 
