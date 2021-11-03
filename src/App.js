@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { useState } from 'react/cjs/react.development';
+import User from './components/User/User';
+import styles from './stylesGlobal.module.css';
+import CardUser from './components/User/CardUser/CardUser';
+import ShowUsers from './components/ShowUsers/ShowUser';
+
 
 function App() {
+
+  const [listUsers, setListUsers] = useState([]);
+
+
+  const addUserHandler = (name, age) => {
+    setListUsers((preventUsers)=>{
+      return [
+        ...preventUsers,
+        {name: name, age: age, id: Math.random().toString}
+      ]
+    })
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.App}>
+      <User addNewUser={addUserHandler}/>
+      <CardUser className={styles.list}>
+               <ShowUsers users={listUsers}/>
+      </CardUser>
     </div>
   );
 }
