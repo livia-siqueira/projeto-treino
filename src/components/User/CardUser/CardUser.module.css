@@ -1,5 +1,5 @@
 .Card {
-    width: 50%;
+    max-width: 50%;
     margin: 20px auto;
     border-radius: 40px;
     padding: 12px 30px;

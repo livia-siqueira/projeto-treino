@@ -12,20 +12,22 @@ function App() {
 
 
   const addUserHandler = (name, age) => {
-    setListUsers((preventUsers)=>{
+    setListUsers((preventUsers) => {
       return [
         ...preventUsers,
-        {name: name, age: age, id: Math.random().toString}
+        { name: name, age: age, id: Math.random().toString }
       ]
     })
   }
 
+  const CardList = <CardUser className={styles.list}>
+    <ShowUsers users={listUsers} />
+  </CardUser>;
+
   return (
     <div className={styles.App}>
-      <User addNewUser={addUserHandler}/>
-      <CardUser className={styles.list}>
-               <ShowUsers users={listUsers}/>
-      </CardUser>
+      <User addNewUser={addUserHandler} />
+      {listUsers.length === 0 ? <p className={styles.noUsers}>Not found Users</p> : CardList}
     </div>
   );
 }

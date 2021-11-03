@@ -59,7 +59,7 @@ const User = (props) => {
             <CardUser className={styles.enters}>
                 <InputUser title="UserName" getValue={getValue} value={nameUser} />
                 <InputUser title="Age(Years)" getValue={getAge} value={ageUser} />
-                <ButtonUser addNewUserClick={addNewUserClick} />
+                <ButtonUser eventClick={addNewUserClick} content="Add User" />
             </CardUser>
 
         </div>
